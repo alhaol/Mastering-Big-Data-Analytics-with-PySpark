@@ -287,7 +287,7 @@ class Course:
         """
         # TODO: check if ports are available
         # TODO: dynamic port mapping
-        port_map = {"{}/tcp".format(p): ("127.0.0.1", p) for p in self.ports}
+        port_map = {"{}/tcp".format(p): ("0.0.0.0", p) for p in self.ports}
 
         self.container = self.client.containers.run(
             ports=port_map,
@@ -328,7 +328,7 @@ if __name__ == "__main__":
     # Set up the course
     course = Course()
 
-    course_url = "http://localhost:{port}/lab?token={token}".format(
+    course_url = "http://0.0.0.0:{port}/lab?token={token}".format(
         port=8888, token=re_search('ENV JUPYTER_TOKEN "([\w-]+)"', course.Dockerfile)
     )
 
